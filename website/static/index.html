@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a1018">
+  <title>Campus Packet Lab</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="rail" aria-label="Primary navigation">
+      <a class="brand-mark" href="#" aria-label="Campus Packet Lab home"><span>⌁</span></a>
+      <nav>
+        <a class="rail-link active" href="#lab" aria-label="Network lab" title="Network lab">⌘</a>
+        <a class="rail-link" href="#trace-panel" aria-label="Packet traces" title="Packet traces">⇢</a>
+        <a class="rail-link" href="#vlans" aria-label="VLANs" title="VLANs">▦</a>
+      </nav>
+      <div class="rail-bottom"><span class="online-dot"></span></div>
+    </aside>
+
+    <main class="main-content" id="lab">
+      <header class="topbar">
+        <div class="crumb"><span>NETWORK LAB</span><b>/</b><strong>Campus network</strong></div>
+        <div class="top-actions"><a class="download-link" href="/Group_project_completed.pkt" download>↓ <span>Open in Packet Tracer</span></a><span class="live-pill"><i></i> SIMULATION READY</span><span class="avatar">CL</span></div>
+      </header>
+
+      <section class="page-heading">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-line"></span> PACKET TRACER · INTERACTIVE LAB</div>
+          <h1>Campus network</h1>
+          <p>Explore the topology and follow packets across departments in real time.</p>
+        </div>
+        <button class="quiet-button" id="refresh-button" type="button"><span aria-hidden="true">↻</span> Refresh lab</button>
+      </section>
+
+      <section class="stat-grid" aria-label="Network summary">
+        <article class="stat-card"><div class="stat-icon cyan">⌘</div><div><span>Network devices</span><strong id="device-count">—</strong></div><small class="stat-note">active in topology</small></article>
+        <article class="stat-card"><div class="stat-icon violet">▦</div><div><span>Department VLANs</span><strong id="vlan-count">—</strong></div><small class="stat-note">segmented network</small></article>
+        <article class="stat-card"><div class="stat-icon green">↔</div><div><span>Connected links</span><strong id="link-count">—</strong></div><small class="stat-note">all links available</small></article>
+        <article class="stat-card"><div class="stat-icon amber">◉</div><div><span>Packets traced</span><strong id="trace-count">0</strong></div><small class="stat-note">this session</small></article>
+      </section>
+
+      <section class="workspace-grid">
+        <section class="panel controls-panel" aria-labelledby="trace-title">
+          <div class="panel-heading">
+            <div><div class="panel-kicker">SIMULATOR</div><h2 id="trace-title">Trace a packet</h2></div>
+            <span class="panel-icon">⇢</span>
+          </div>
+          <p class="panel-copy">Choose two endpoints and inspect each network hop.</p>
+          <form id="trace-form">
+            <label for="source">SOURCE DEVICE</label>
+            <div class="select-wrap"><span class="field-symbol">◉</span><select id="source" name="source" required></select><span class="select-arrow">⌄</span></div>
+            <button class="swap-button" id="swap-button" type="button" aria-label="Swap source and destination">⇅</button>
+            <label for="destination">DESTINATION DEVICE</label>
+            <div class="select-wrap"><span class="field-symbol destination-symbol">◎</span><select id="destination" name="destination" required></select><span class="select-arrow">⌄</span></div>
+            <label for="protocol">PROTOCOL</label>
+            <div class="select-wrap"><span class="field-symbol protocol-symbol">◈</span><select id="protocol" name="protocol"><option>ICMP</option><option>TCP</option><option>UDP</option></select><span class="select-arrow">⌄</span></div>
+            <div id="port-row" class="port-row hidden"><label for="port">DESTINATION PORT</label><input id="port" name="destinationPort" type="number" min="1" max="65535" value="80"></div>
+            <div class="quick-label">QUICK FLOWS</div>
+            <div class="quick-flows">
+              <button type="button" class="quick-flow" data-source="A1" data-destination="SERVER" data-protocol="TCP" data-port="80"><span class="flow-dot web"></span>Open campus portal<span>↗</span></button>
+              <button type="button" class="quick-flow" data-source="T1" data-destination="A1" data-protocol="ICMP"><span class="flow-dot ping"></span>Cross-VLAN ping<span>↗</span></button>
+              <button type="button" class="quick-flow" data-source="S1" data-destination="SERVER" data-protocol="UDP" data-port="53"><span class="flow-dot dns"></span>DNS request<span>↗</span></button>
+            </div>
+            <button class="primary-button" id="run-button" type="submit"><span class="run-symbol">▶</span><span id="run-label">Run packet trace</span><span class="button-shortcut">↵</span></button>
+          </form>
+          <div class="model-note"><span>ⓘ</span><p>Simulation models the R1 router, SW1 switch, four VLANs, DHCP clients, and school server from your Packet Tracer lab.</p></div>
+        </section>
+
+        <section class="panel topology-panel" aria-labelledby="topology-title">
+          <div class="panel-heading topology-heading">
+            <div><div class="panel-kicker">LIVE TOPOLOGY</div><h2 id="topology-title">Packet Tracer map</h2></div>
+            <div class="map-actions"><span class="legend-item"><i class="legend-line trunk-line"></i> 802.1Q trunk</span><span class="legend-item"><i class="legend-line access-line"></i> Access link</span><button id="fit-button" class="icon-button" type="button" title="Fit topology">⤢</button></div>
+          </div>
+          <div class="map-wrap" id="map-wrap"><svg id="topology-svg" viewBox="0 0 1000 570" role="img" aria-label="Interactive campus network topology"></svg><div class="map-tooltip" id="map-tooltip"></div></div>
+          <div class="map-footer"><span><i class="online-dot"></i> All modeled interfaces up</span><span>Click a device to set an endpoint</span></div>
+        </section>
+
+        <section class="panel trace-panel" id="trace-panel" aria-labelledby="trace-log-title">
+          <div class="panel-heading">
+            <div><div class="panel-kicker">PACKET INSPECTOR</div><h2 id="trace-log-title">Trace details</h2></div>
+            <button id="clear-button" class="text-button" type="button">Clear</button>
+          </div>
+          <div class="trace-empty" id="trace-empty"><div class="empty-icon">⌁</div><strong>Ready to trace</strong><p>Run a packet trace to see its route, VLAN tags, and TTL changes.</p></div>
+          <div class="trace-result hidden" id="trace-result" aria-live="polite">
+            <div class="result-summary" id="result-summary"></div>
+            <div class="packet-meta" id="packet-meta"></div>
+            <div class="hop-list" id="hop-list"></div>
+          </div>
+        </section>
+      </section>
+
+      <section class="bottom-grid">
+        <section class="panel vlan-panel" id="vlans" aria-labelledby="vlan-title">
+          <div class="panel-heading compact-heading"><div><div class="panel-kicker">SEGMENTATION</div><h2 id="vlan-title">Department VLANs</h2></div><span class="small-muted">4 networks</span></div>
+          <div class="vlan-list" id="vlan-list"></div>
+        </section>
+        <section class="panel history-panel" aria-labelledby="history-title">
+          <div class="panel-heading compact-heading"><div><div class="panel-kicker">RECENT ACTIVITY</div><h2 id="history-title">Trace history</h2></div><span class="small-muted" id="history-count">No traces yet</span></div>
+          <div class="history-list" id="history-list"><div class="history-empty">Your recent packet traces will appear here.</div></div>
+        </section>
+      </section>
+      <footer class="footer"><span>Campus Packet Lab</span><span>Built from the Group Project Packet Tracer topology</span><span>LOCAL SIMULATION</span></footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/app.js" defer></script>
+</body>
+</html>

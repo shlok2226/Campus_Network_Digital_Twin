@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07111d">
+  <title>Campus Connect | School Portal</title>
+  <style>
+    :root{color-scheme:dark;--ink:#e5eef8;--muted:#9aabc0;--blue:#65b8ff;--teal:#43d6c5;--paper:#07111d;--panel:#101e2d;--line:#24374b}
+    *{box-sizing:border-box}body{margin:0;font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--paper)}
+    a{color:inherit}.hero{color:white;background:linear-gradient(120deg,#07111d 0%,#103350 65%,#075b60 100%);padding:2rem max(1.25rem,calc((100% - 1080px)/2)) 3.5rem}
+    .brand{font-size:.85rem;font-weight:750;letter-spacing:.14em;text-transform:uppercase;opacity:.85}.hero h1{font-size:clamp(2.2rem,6vw,4.25rem);line-height:1.05;max-width:750px;margin:2.3rem 0 1rem}.hero p{max-width:600px;color:#e1f4f5;font-size:1.1rem;margin:0}
+    .wrap{width:min(1080px,calc(100% - 2.5rem));margin:-1.6rem auto 0}.welcome{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.3rem 1.5rem;box-shadow:0 12px 35px #0005}.welcome strong{color:var(--teal)}
+    h2{font-size:1.45rem;margin:2rem 0 1rem}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.25rem;min-height:185px}.icon{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:#123c48;color:#63e1d1;font-size:1.25rem;font-weight:800}.card h3{margin:1rem 0 .35rem;font-size:1.05rem}.card p{margin:0;color:var(--muted);font-size:.94rem}.notice{margin:1.25rem 0 2rem;padding:1rem 1.2rem;border-left:4px solid var(--teal);background:#102c37;border-radius:0 10px 10px 0;color:#d1e7eb}.notice strong{display:block;margin-bottom:.2rem}
+    .topology{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.25rem;overflow:hidden}.topology p{color:var(--muted);margin:.2rem 0 1rem}.diagram{display:block;width:100%;height:auto;min-width:620px}.diagram-wrap{overflow-x:auto}.node{fill:#152a3c;stroke:#4e7895;stroke-width:2}.node-core{fill:#153d4b;stroke:#43d6c5}.node-server{fill:#392a4a;stroke:#bd9bff}.wire{stroke:#58a5ca;stroke-width:3}.wire-server{stroke:#bd9bff}.label{fill:#e5eef8;font:700 15px system-ui,sans-serif}.small{fill:#a8bbcf;font:12px system-ui,sans-serif}.vlan{fill:#132635;stroke:#294158;stroke-width:1.5}.zone{fill:#bd9bff;font:700 12px system-ui,sans-serif}
+    footer{border-top:1px solid var(--line);padding:1.4rem max(1.25rem,calc((100% - 1080px)/2));color:var(--muted);font-size:.9rem;background:#091522}
+    @media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:480px){.hero{padding-top:1.4rem}.grid{grid-template-columns:1fr}.card{min-height:auto}.wrap{width:calc(100% - 1.5rem)}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="brand">Campus Connect · School Network</div>
+    <h1>Welcome to your campus.</h1>
+    <p>One place for students, teachers, administration, and the library to find the services they need.</p>
+  </header>
+  <main class="wrap">
+    <section class="welcome" aria-label="Network status"><strong>Campus portal is online.</strong> You are connected to the school network. Choose a service area below.</section>
+    <h2>Campus services</h2>
+    <section class="grid" aria-label="Campus departments">
+      <article class="card"><div class="icon" aria-hidden="true">A</div><h3>Administration</h3><p>Campus announcements, office information, and school operations.</p></article>
+      <article class="card"><div class="icon" aria-hidden="true">T</div><h3>Teachers</h3><p>Teaching resources, staff information, and classroom support.</p></article>
+      <article class="card"><div class="icon" aria-hidden="true">S</div><h3>Students</h3><p>Student resources, learning support, and campus updates.</p></article>
+      <article class="card"><div class="icon" aria-hidden="true">L</div><h3>Library</h3><p>Library services, research resources, and study information.</p></article>
+    </section>
+    <h2>Packet Tracer network</h2>
+    <section class="topology" aria-label="Packet Tracer network topology">
+      <p>Live lab design · 4 VLANs · router-on-a-stick · DHCP and DNS services</p>
+      <div class="diagram-wrap">
+        <svg class="diagram" viewBox="0 0 900 390" role="img" aria-labelledby="diagram-title diagram-desc">
+          <title id="diagram-title">Campus Packet Tracer network topology</title>
+          <desc id="diagram-desc">R1 router connects by an 802.1Q trunk to SW1. SW1 connects the administration, teacher, student, and library VLAN clients, plus the school server.</desc>
+          <line class="wire" x1="450" y1="83" x2="450" y2="145"/><text class="small" x="466" y="119">802.1Q trunk · Gi0/0</text>
+          <rect class="node node-core" x="345" y="25" width="210" height="58" rx="14"/><text class="label" x="450" y="50" text-anchor="middle">R1 · Router</text><text class="small" x="450" y="69" text-anchor="middle">VLAN gateways · DHCP</text>
+          <rect class="node node-core" x="345" y="145" width="210" height="58" rx="14"/><text class="label" x="450" y="170" text-anchor="middle">SW1 · 2960 Switch</text><text class="small" x="450" y="189" text-anchor="middle">VLAN access ports</text>
+          <line class="wire" x1="450" y1="203" x2="110" y2="260"/><line class="wire" x1="450" y1="203" x2="335" y2="260"/><line class="wire" x1="450" y1="203" x2="565" y2="260"/><line class="wire" x1="450" y1="203" x2="790" y2="260"/><line class="wire wire-server" x1="450" y1="203" x2="450" y2="315"/>
+          <rect class="vlan" x="20" y="260" width="180" height="82" rx="12"/><text class="zone" x="110" y="283" text-anchor="middle">VLAN 10 · ADMIN</text><text class="label" x="110" y="306" text-anchor="middle">A1 · A2</text><text class="small" x="110" y="326" text-anchor="middle">192.168.10.0/24</text>
+          <rect class="vlan" x="245" y="260" width="180" height="82" rx="12"/><text class="zone" x="335" y="283" text-anchor="middle">VLAN 20 · TEACHERS</text><text class="label" x="335" y="306" text-anchor="middle">T1 · T2</text><text class="small" x="335" y="326" text-anchor="middle">192.168.20.0/24</text>
+          <rect class="vlan" x="475" y="260" width="180" height="82" rx="12"/><text class="zone" x="565" y="283" text-anchor="middle">VLAN 30 · STUDENTS</text><text class="label" x="565" y="306" text-anchor="middle">S1 · S2</text><text class="small" x="565" y="326" text-anchor="middle">192.168.30.0/24</text>
+          <rect class="vlan" x="700" y="260" width="180" height="82" rx="12"/><text class="zone" x="790" y="283" text-anchor="middle">VLAN 40 · LIBRARY</text><text class="label" x="790" y="306" text-anchor="middle">L1 · L2</text><text class="small" x="790" y="326" text-anchor="middle">192.168.40.0/24</text>
+          <rect class="node node-server" x="345" y="315" width="210" height="58" rx="14"/><text class="label" x="450" y="340" text-anchor="middle">School Server</text><text class="small" x="450" y="359" text-anchor="middle">192.168.40.10 · HTTP · DNS</text>
+        </svg>
+      </div>
+    </section>
+    <aside class="notice"><strong>Need help connecting?</strong> Network devices receive an address automatically. If this page does not load, check that your device is connected to the campus switch and set to DHCP.</aside>
+  </main>
+  <footer>Campus Connect · Internal school network · Server 192.168.40.10</footer>
+</body>
+</html>
